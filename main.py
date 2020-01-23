@@ -45,6 +45,7 @@ Builder.load_string('''
         orientation: 'vertical'
         multiselect: True
         touch_multiselect: True
+        pos_hint: {'top':1, 'right': 1}
 ''')
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
@@ -77,39 +78,24 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
             print("selection removed for {0}".format(rv.data[index]))
 
 class RV(RecycleView):
-    def __init__(self,games, **kwargs):
+    def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
         #print(list)
         print('made it here')
-        self.data = [{'text':str(x)} for x in games]
-        #print(self.data)
+        #self.data = [{'text':str(x)} for x in self.data]
+        print(self.data)
 
 
-"""Builder.load_string('''
-<RV>:
-    viewclass:'Label'
-    RecycleBoxLayout:
-        default_size: None, dp(56)
-        default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'vertical'
-''')
-class RV(RecycleView):
-    def __init__(self,games,**kwargs):
-        super(RV, self).__init__(**kwargs)
-        self.data = [{'text':str(x)} for x in games]
-        #self.data = [{'text':str(x)} for x in range(10)]"""
-
-
+# Creates the search function
 class SearchScreen(GridLayout):
     all_r = []
     search = ObjectProperty(None)
-    dynamic_ids = DictProperty({})
+    #dynamic_ids = DictProperty({})
 
     def print_out(self, game):
         print(str(self.all_r[2][game]))
 
+    # function to search from API
     def on_search(self, bg, expan, src):
         keyword = src.text
         keyword = keyword.replace(" ", '+')
@@ -124,49 +110,16 @@ class SearchScreen(GridLayout):
             link = "https://api.geekdo.com/xmlapi2/search?query={}".format(keyword)
 
         self.all_r = query(link)
-        #print(self.all_r)
-        #return RV(self.all_r)
-        #self.add_widget(RV(self.all_r[2]))
-        #self.Results()
-        return(RV(self.all_r[2]))
-        #print('azul')
-        #Results.data = self.all_r[2]
-        # add function to query BGG API2
-        # GridLayout for search results: 3 cols [Name; Type; ID]
+        print(self.all_r[0][0], self.all_r[1][0], self.all_r[2][0])
+        g_ids = list(map(int, self.all_r[2]))
+        listy = {}
+        for x in range(len(self.all_r[0])):
+            listy[self.all_r[0][x]] = g_ids[x]
+        #RV.data = self.all_r[2]
+        #RV.data = listy
+        RV.data = g_ids
+        return RV()
 
-    #def Results(self, *kwargs):
-
-        #print(self.all_r[2])
-
-
-        """scroll = self.ids.resultados
-        scroll.clear_widgets()
-        print("names: " + str(len(self.all_r[0])) + "; years: " + str(len(self.all_r[1])) + "; IDs: " + str(len(self.all_r[2])))
-
-        grid = GridLayout(cols=3, size_hint_y=None, spacing = '25dp', padding=[0,"10dp",0,0], height=200)
-        buttons = {}
-        id_but = {}
-        for game in range(len(self.all_r[0])):
-            #id = str(self.all_r[2][game])
-            name = str(self.all_r[2][game])
-            grid.add_widget(Label(text=self.all_r[0][game], halign="left",text_size=(199,None), shorten=True, height = "10dp"))
-            grid.add_widget(Label(text=self.all_r[1][game], height = "10dp"))
-
-            buttons[name] = Button(text=self.all_r[2][game], background_color = (0,0,0,1), size_hint_y=None, height="10dp")
-            id_but[buttons[name]] = str(self.all_r[2][game])
-            #nButton.bind(on_press=self.print_out(game))
-            #buttons[name].bind(on_press = lambda x: print(id_but[buttons[name]]))
-            grid.add_widget(buttons[name])
-
-            #print(buttons[name])
-            #f_nextCheck.bind(on_active=self.print_out)
-            #grid.add_widget(CheckBox(height = "10dp"))
-            #self.CBID = CheckBox()
-
-            #self.ids[str(self.all_r[2][game])].add_widget(self.CBID)
-            #grid.add_widget(Label(text=self.all_r[2][game], size_hint_x=1))
-        print(buttons)"""
-        #scroll.add_widget(grid)
 
 
 
@@ -176,13 +129,9 @@ class SearchScreen(GridLayout):
 class BGGApp(App):
     def build(self):
         return SearchScreen()
-        #self.load_kv('BGG.kv')
+        #return RV()
 
-"""class Results(App):
-    data = []
-    def build(self):
-        return RV()"""
-
+# run the application
 if __name__ == '__main__':
     BGGApp().run()
     #Results().run()
