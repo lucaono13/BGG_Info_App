@@ -26,6 +26,7 @@ g_ids = []
 g_years = []
 g_types = []
 #all_r = []
+
 Builder.load_string('''
 <SelectableLabel>:
     canvas.before:
@@ -45,7 +46,7 @@ Builder.load_string('''
         orientation: 'vertical'
         multiselect: True
         touch_multiselect: True
-        pos_hint: {'top':1, 'right': 1}
+
 ''')
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
@@ -88,7 +89,7 @@ class RV(RecycleView):
 
 # Creates the search function
 class SearchScreen(GridLayout):
-    all_r = []
+    all_r = ListProperty([])
     search = ObjectProperty(None)
     #dynamic_ids = DictProperty({})
 
@@ -117,8 +118,9 @@ class SearchScreen(GridLayout):
             listy[self.all_r[0][x]] = g_ids[x]
         #RV.data = self.all_r[2]
         #RV.data = listy
-        RV.data = g_ids
+        RV.data = self.all_r[2]
         return RV()
+        #return Builder.load_string(kv)
 
 
 
