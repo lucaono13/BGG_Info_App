@@ -25,7 +25,7 @@ g_names = []
 g_ids = []
 g_years = []
 g_types = []
-all_r = []
+#all_r = []
 Builder.load_string('''
 <SelectableLabel>:
     canvas.before:
@@ -48,18 +48,22 @@ Builder.load_string('''
 ''')
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
-    ''' Adds selection and focus behavior to the view.'''
+    ''' Adds selection and focus behaviour to the view. '''
+
 
 class SelectableLabel(RecycleDataViewBehavior, Label):
+    ''' Adds selection support to the Label '''
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
 
     def refresh_view_attrs(self, rv, index, data):
+        ''' Catch and handle the view changes '''
         self.index = index
         return super(SelectableLabel, self).refresh_view_attrs(rv,index,data)
 
     def on_touch_down(self, touch):
+        ''' Add selection on touch down '''
         if super(SelectableLabel, self).on_press(touch):
             return True
         if self.collide_point(*touch.pos) and self.selectable:
@@ -73,13 +77,33 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
             print("selection removed for {0}".format(rv.data[index]))
 
 class RV(RecycleView):
-    def __init__(self, **kwargs):
+    def __init__(self,games, **kwargs):
         super(RV, self).__init__(**kwargs)
-        self.data = [{'game':str(x)} for x in all_r[2]]
+        #print(list)
+        print('made it here')
+        self.data = [{'text':str(x)} for x in games]
+        #print(self.data)
+
+
+"""Builder.load_string('''
+<RV>:
+    viewclass:'Label'
+    RecycleBoxLayout:
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+''')
+class RV(RecycleView):
+    def __init__(self,games,**kwargs):
+        super(RV, self).__init__(**kwargs)
+        self.data = [{'text':str(x)} for x in games]
+        #self.data = [{'text':str(x)} for x in range(10)]"""
 
 
 class SearchScreen(GridLayout):
-    #all_r = []
+    all_r = []
     search = ObjectProperty(None)
     dynamic_ids = DictProperty({})
 
@@ -100,9 +124,13 @@ class SearchScreen(GridLayout):
             link = "https://api.geekdo.com/xmlapi2/search?query={}".format(keyword)
 
         self.all_r = query(link)
-
+        #print(self.all_r)
+        #return RV(self.all_r)
+        #self.add_widget(RV(self.all_r[2]))
         #self.Results()
-
+        return(RV(self.all_r[2]))
+        #print('azul')
+        #Results.data = self.all_r[2]
         # add function to query BGG API2
         # GridLayout for search results: 3 cols [Name; Type; ID]
 
@@ -149,7 +177,12 @@ class BGGApp(App):
     def build(self):
         return SearchScreen()
         #self.load_kv('BGG.kv')
-        return RV()
+
+"""class Results(App):
+    data = []
+    def build(self):
+        return RV()"""
 
 if __name__ == '__main__':
     BGGApp().run()
+    #Results().run()
