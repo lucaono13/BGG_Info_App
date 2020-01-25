@@ -1,7 +1,7 @@
 # BGG Info App
 App that will take board game info from Board Game Geek and will create a .csv file from it.
 
-Created using Python and Kivy
+Created using Python and Kivy (while learning about Kivy along the way)
 
 
 **Features**
@@ -13,4 +13,4 @@ Created using Python and Kivy
 * See rows on database like results [WIP]
 * More features...
 
-This is a very barebones ReadMe file. As I get more done and know what more I should write, I will update readme as much as possible.
+This is a very barebones ReadMe file. As I get more done and know what I can and can't do with Kivy, I will update readme as much as possible.
