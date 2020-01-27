@@ -1,0 +1,81 @@
+GameRoot:
+
+<GameRoot>:
+    SearchScreen:
+
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: (0, 0.9, .1, .3)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<SearchScreen>:
+    #orientation: 'vertical'
+    cols: 1
+
+    search_input: search
+    search_results: search_results_list
+
+    BoxLayout:
+        height: "30dp"
+        size_hint_y: None
+
+        TextInput:
+            multiline:False
+            on_text_validate: root.on_search(search)
+            id: search
+            size_hint_x: .5
+            focus: True
+            height: 30
+            hint_text: 'Board Game Name'
+        ToggleButton:
+            id: enter
+            text: 'Search'
+            on_press: root.on_search(search)
+            height: 30
+            size_hint_x: .15
+    GridLayout:
+        cols: 3
+        size_hint_y: None
+        height: "30dp"
+        Label:
+            text: "Name"
+            size_hint_x: 1
+        Label:
+            text: "Year"
+            size_hint_x: 1
+            padding:  "1000dp",0
+        Label:
+            text: "ID"
+            size_hint_x: 1
+    Widget:
+        id: separator
+        size_hint_y: None
+        height: 6
+        canvas:
+            Color:
+                rgb: 1., 1., 1.
+            Rectangle:
+                pos: 0, separator.center_y
+                size: root.width, 2
+    RecycleView:
+        id: search_results_list
+
+        viewclass: 'SelectableLabel'
+
+        SelectableRecycleBoxLayout:
+            default_size: None, dp(26)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            multiselect: True
+            touch_multiselect: True
