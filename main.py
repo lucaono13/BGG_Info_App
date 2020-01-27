@@ -27,20 +27,25 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, Recycle
     ''' Adds selection and focus behaviour to the view. '''
 
 
-class SelectableLabel(RecycleDataViewBehavior, Label):
+#class SelectableLabel(RecycleDataViewBehavior, Label):
+class RecycleViewRow(RecycleDataViewBehavior, BoxLayout):
     ''' Adds selection support to the Label '''
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
 
+    name = StringProperty('')
+    year = StringProperty('')
+    uid = StringProperty('')
+
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
         self.index = index
-        return super(SelectableLabel, self).refresh_view_attrs(rv,index,data)
+        return super(RecycleViewRow, self).refresh_view_attrs(rv,index,data)
 
     def on_touch_down(self, touch):
         ''' Add selection on touch down '''
-        if super(SelectableLabel, self).on_touch_down(touch):
+        if super(RecycleViewRow, self).on_touch_down(touch):
             return True
         if self.collide_point(*touch.pos) and self.selectable:
             return self.parent.select_with_touch(self.index, touch)
@@ -48,22 +53,33 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def apply_selection(self,rv, index, is_selected):
         self.selected = is_selected
         if is_selected:
-            print("selection changed to {0}".format(rv.data[index]))
+            print("{0} selected".format(rv.data[index]))
         else:
-            print("selection removed for {0}".format(rv.data[index]))
+            pass #print("selection removed for {0}".format(rv.data[index]))
 
 # Creates the search function
 class SearchScreen(GridLayout):
     all_r = ListProperty([])
-    search = ObjectProperty()
+    searchinput = ObjectProperty()
     search_results = ObjectProperty()
+    searchrs = DictProperty({})
 
     def print_out(self, game):
         print(str(self.all_r[2][game]))
 
+    # Imports the data to the RecycleView
     def found_search(self,name, year, uid):
         games = ['{} ({})'.format(name[d], year[d]) for d in range(len(name))]
-        self.search_results.data = [{'game':x} for x in games]
+        #self.search_results.data = [{games[x]:str(uid[x])} for x in range(len(games))]
+        self.search_results.data = [{'text':str(games[x])} for x in range(len(games))]
+        #self.searchrs.data = [{games[x]:str(uid[x])} for x in range(len(games))]
+        self.search_results.data = [{'name':str(name[x]), 'year':str(year[x]), 'uid':str(uid[x])} for x in range(len(games))]
+        #self.data = [{'game':x} for x in games]
+        #print(type(self.search_results.data))
+        #print(type(self.searchrs.data))
+        #data = self.search_results.astype('dict')
+        #self.search_results.data = {u: 0 for u in name}
+        #zprint(data)
         print(f"self.search_results.data={self.search_results.data}")
 
     # function to search from API

@@ -3,26 +3,41 @@ GameRoot:
 <GameRoot>:
     SearchScreen:
 
-<SelectableLabel>:
+#<SelectableLabel>:
+<RecycleViewRow>:
     # Draw a background to indicate selection
+    name: ""
+    year: ""
+    uid: ""
     canvas.before:
         Color:
-            rgba: (1, 0, 0, 1) if self.selected else (.0, 0.9, .1, .3)
+            rgba: (0, 1, 1, .80) if self.selected else (0, 0, 1, 0)
         Rectangle:
             pos: self.pos
             size: self.size
         Color:
-            rgba: (0, 0.9, .1, .3)
+            rgba: (0, 0, 0, .3)
         Rectangle:
             pos: self.pos
             size: self.size
 
+    orientation: 'horizontal'
+    Label:
+        text: root.name
+        text_size: self.size
+        shorten: True
+        halign:'left'
+    Label:
+        text: root.year
+    Label:
+        text: root.uid
 <SearchScreen>:
     #orientation: 'vertical'
     cols: 1
 
-    search_input: search
+    searchinput: searchinput
     search_results: search_results_list
+    #searchrs: searchrs
 
     BoxLayout:
         height: "30dp"
@@ -30,8 +45,8 @@ GameRoot:
 
         TextInput:
             multiline:False
-            on_text_validate: root.on_search(normal_bg, bg_expan, search)
-            id: search
+            on_text_validate: root.on_search(normal_bg, bg_expan, searchinput)
+            id: searchinput
             size_hint_x: .5
             focus: True
             height: 30
@@ -39,7 +54,7 @@ GameRoot:
         ToggleButton:
             id: enter
             text: 'Search'
-            on_press: root.on_search(normal_bg, bg_expan, search)
+            on_press: root.on_search(normal_bg, bg_expan, searchinput)
             height: 30
             size_hint_x: .15
     AnchorLayout:
@@ -91,7 +106,9 @@ GameRoot:
             RecycleView:
                 id: search_results_list
 
-                viewclass: 'SelectableLabel'
+                #data: [{'text': str(x)} for x in range(20)]
+
+                viewclass: 'RecycleViewRow'
 
                 SelectableRecycleBoxLayout:
                     default_size: None, dp(26)
