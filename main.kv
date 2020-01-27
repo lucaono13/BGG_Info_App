@@ -30,7 +30,7 @@ GameRoot:
 
         TextInput:
             multiline:False
-            on_text_validate: root.on_search(search)
+            on_text_validate: root.on_search(normal_bg, bg_expan, search)
             id: search
             size_hint_x: .5
             focus: True
@@ -39,43 +39,65 @@ GameRoot:
         ToggleButton:
             id: enter
             text: 'Search'
-            on_press: root.on_search(search)
+            on_press: root.on_search(normal_bg, bg_expan, search)
             height: 30
             size_hint_x: .15
-    GridLayout:
-        cols: 3
-        size_hint_y: None
-        height: "30dp"
-        Label:
-            text: "Name"
-            size_hint_x: 1
-        Label:
-            text: "Year"
-            size_hint_x: 1
-            padding:  "1000dp",0
-        Label:
-            text: "ID"
-            size_hint_x: 1
-    Widget:
-        id: separator
-        size_hint_y: None
-        height: 6
-        canvas:
-            Color:
-                rgb: 1., 1., 1.
-            Rectangle:
-                pos: 0, separator.center_y
-                size: root.width, 2
-    RecycleView:
-        id: search_results_list
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        GridLayout:
+            cols: 1
+            size_x: root.width
+            GridLayout:
+                height: "30dp"
+                cols: 4
+                size_hint_y: None
+                Label:
+                    text: 'Board Game'
+                    size_hint_x: 1
+                CheckBox:
+                    id: normal_bg
+                    size_hint_x: 1
+                Label:
+                    text: 'Expansion'
+                    size_hint_x: 1
+                CheckBox:
+                    id: bg_expan
+                    size_hint_x: 1
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: "30dp"
+                Label:
+                    text: "Name"
+                    size_hint_x: 1
+                Label:
+                    text: "Year"
+                    size_hint_x: 1
+                    padding:  "1000dp",0
+                Label:
+                    text: "ID"
+                    size_hint_x: 1
+            Widget:
+                id: separator
+                size_hint_y: None
+                height: 6
+                canvas:
+                    Color:
+                        rgb: 1., 1., 1.
+                    Rectangle:
+                        pos: 0, separator.center_y
+                        size: root.width, 2
+            RecycleView:
+                id: search_results_list
 
-        viewclass: 'SelectableLabel'
+                viewclass: 'SelectableLabel'
 
-        SelectableRecycleBoxLayout:
-            default_size: None, dp(26)
-            default_size_hint: 1, None
-            size_hint_y: None
-            height: self.minimum_height
-            orientation: 'vertical'
-            multiselect: True
-            touch_multiselect: True
+                SelectableRecycleBoxLayout:
+                    default_size: None, dp(26)
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    multiselect: True
+                    touch_multiselect: True
