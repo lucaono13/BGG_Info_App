@@ -7,7 +7,8 @@ Created using Python and Kivy (while learning about Kivy along the way)
 **Features**
 * Search Board Game Geek XMLAPI2 for results that fit the search
 * Read results from search [WIP] - Working on added Recycle View instead of scroll view
-  - Recycle view is giving errors: search function does return results, put doesn't output to a recycle view correctly yet.
+  - ~~Recycle view is giving errors: search function does return results, put doesn't output to a recycle view correctly yet.~~ *Resolved.*
+  - Missing labels for RecycleView. Functionality is working otherwise
 * Selected board games to add to csv file [WIP]
 * Import .csv file and add/remove board games [WIP]
 * See rows on database like results [WIP]
