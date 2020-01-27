@@ -14,3 +14,13 @@ Created using Python and Kivy (while learning about Kivy along the way)
 * More features...
 
 This is a very barebones ReadMe file. As I get more done and know what I can and can't do with Kivy, I will update readme as much as possible.
+
+
+---
+In order to run the Python script, you will need to install Kivy (run only main.py):
+
+> Windows: https://kivy.org/doc/stable/installation/installation-windows.html
+
+> MacOS: https://kivy.org/doc/stable/installation/installation-osx.html
+
+> Linux: https://kivy.org/doc/stable/installation/installation-linux.html
