@@ -1,5 +1,7 @@
 import requests
 import xml.etree.ElementTree as ET
+import pandas as pd
+
 
 def query(link):
     r = requests.get(link)
@@ -46,30 +48,20 @@ def getBoxArt(ids):
     np_img = 0
     r = requests.get(link)
     root = ET.fromstring(r.content)
-    itext = 'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'
-    for child in root.iter('*'):
-        for x in child:
-            if(x.tag=='image'):
-                #print(x.text)
-                np_img +=1
-            if((np_img >0) & (x.tag =='image')):
-                    image_urls.append(x.text)
-            #else:
-                #itext = child.text
-                #pass#image_urls.append(itext)
-        if(child.tag == 'image'):
-            if (np_img > 0):
-                pass#image_urls.append(child.text)
-            else:
-                image_urls.append(itext)
-        np_img = 0
-                #print(x.text)
+    no_image = 'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'
+    tags = []
+    for item in root.findall('item'):
+        for x in item.iter('*'):
+            tags.append(x.tag)
+            if(x.tag == 'image'):
+                image_urls.append(x.text)
+        if('image' not in tags):
+            image_urls.append(no_image)
+        else:
+            pass
+        tags=[]
 
-        """if(child.tag == 'image'):
-            itext = child.text
-            image_urls.append(itext)
-            print(child.text)"""
-            #image_urls.append('None')
+
 
     #print(type(image_urls))
     print("Box Art acquired")
@@ -77,3 +69,35 @@ def getBoxArt(ids):
     print(image_urls)
     #print(image_urls[0])
     return image_urls
+
+
+def getInfo(csv, ids, df):
+
+    format_ids = ','.join(map(str,ids))
+    link = "https://api.geekdo.com/xmlapi2/thing?id={}&stats=1".format(format_ids)
+    url, name, year, min, max = ([] for i in range(5))
+    r = requests.get(link)
+    root = ET.fromstring(r.content)
+
+
+    for i in ids:
+        url.append("https://boardgamegeek.com/boardgame/{}".format(i))
+    for child in root.iter('*'):
+        if(child.tag == 'yearpublished'):
+            year.append(child.get('value'))
+            #df = df.append({'Year':child.get('value')},ignore_index=True)
+        elif (child.tag =='name'):
+            if(child.get('type') == 'primary'):
+                name.append(child.get('value'))
+                #df = df.append({'Name':child.get('value')},ignore_index=True)
+        elif(child.tag == 'minplayers'):
+            min.append(child.get('value'))
+            #df = df.append({'Min. Players': child.get('value')},ignore_index=True)
+        elif(child.tag == 'maxplayers'):
+            max.append(child.get('value'))
+            #df = df.append({'Max Players': child.get('value')},ignore_index=True)
+        else: pass
+
+    for i in range(len(url)):
+        df = df.append({'Name':name[i],'Year':year[i],'Min. Players':min[i], 'Max Players':max[i], 'Link':url[i]}, ignore_index=True)
+    return df

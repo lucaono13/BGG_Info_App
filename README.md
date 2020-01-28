@@ -9,9 +9,12 @@ Created using Python and Kivy (while learning about Kivy along the way)
 * Read results from search [WIP] - Working on added Recycle View instead of scroll view
   - ~~Recycle view is giving errors: search function does return results, put doesn't output to a recycle view correctly yet.~~ *Resolved.*
   - ~~Missing labels for RecycleView. Functionality is working otherwise~~ *Resolved*
-* When selected, add ID to list of IDs to search as well as remove from list [WIP]
-* See Box Art image of board game in search results [Current WIP]
-* Selected board games to add to csv file [WIP]
+* When selected, add ID to list of IDs to search as well as remove from list 
+* See Box Art image of board game in search results
+* Selected board games to add to csv file
+
+Above function will be going to an Android app for now. Going to work on a desktop app using PyQT. Will separate folders to show this change.
+Below will be part of new program.
 * Import .csv file and add/remove board games [WIP]
 * See rows on database like results [WIP]
 * More features...

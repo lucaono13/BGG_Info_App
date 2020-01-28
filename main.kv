@@ -3,17 +3,10 @@ GameRoot:
 <GameRoot>:
 
     GridLayout:
-        cols: 2
+        cols: 1
         SearchScreen:
-        GridLayout:
-            cols: 1
-            size_hint_x: .25
-            Button:
-                text: 'Add'
-                size_hint_x: .5
-            Button:
-                text: 'Remove'
-                size_hint_x: .5
+        AddRemove:
+
 
 
 #<SelectableLabel>:
@@ -47,10 +40,9 @@ GameRoot:
     Label:
         text: root.uid
     AsyncImage:
-        size_hint_x: .5
-        size_hint_y: .5
+        allow_stretch: True
         source: root.img
-        valign: 'center'
+
 <SearchScreen>:
     #orientation: 'vertical'
     cols: 1
@@ -138,3 +130,55 @@ GameRoot:
                     orientation: 'vertical'
                     multiselect: True
                     touch_multiselect: True
+
+<RV>:
+    viewclass: 'Label'
+    RecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+<AddRemove>:
+    cols: 1
+    add_rem: ""
+    BoxLayout:
+        height: "30dp"
+        size_hint_y: None
+        TextInput:
+            multiline:False
+            on_text_validate: root.CSV_name(filename)
+            id: filename
+            size_hint_x: .7
+            focus: False
+            height: 30
+            hint_text: 'CSV file name'
+        ToggleButton:
+            id: csv_enter
+            text: 'Save!'
+            on_press: root.CSV_name(filename)
+            height: 30
+            size_hint_x: .3
+    BoxLayout:
+        height: "40dp"
+        size_hint_y: None
+        Button:
+            text: 'Get data'
+            on_press: root.AddData()
+            height: 30
+            size_hint_x: .7
+        Button:
+            text: 'Remove data'
+            on_press: root.RemoveData()
+            height: 30
+            size_hint_x: .5
+    Label:
+        text: root.add_rem
+        size_hint_y: None
+        height: 30
+    Button:
+        text: 'Export!'
+        size_hint_y: None
+        height: 30
+        on_press: root.Export()

@@ -21,15 +21,16 @@ from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.boxlayout import BoxLayout
 
 # KivyMD Imports
+import pandas as pd
+from bgg_api_functions import query, getBoxArt, getInfo
 
-from bgg_api_functions import query, getBoxArt
+id_list = []
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
     ''' Adds selection and focus behaviour to the view. '''
 
 
-#class SelectableLabel(RecycleDataViewBehavior, Label):
 class RecycleViewRow(RecycleDataViewBehavior, BoxLayout):
     ''' Adds selection support to the Label '''
     index = None
@@ -58,10 +59,13 @@ class RecycleViewRow(RecycleDataViewBehavior, BoxLayout):
         if is_selected:
             #print(rv.data[index]['selected'])
             print("{0} selected".format(rv.data[index]['name']))
+            id_list.append(rv.data[index]['uid'])
+
         else:
             #3rv.data[index]['selected'] = False
             print("{0} not selected".format(rv.data[index]['name']))
-
+            if(rv.data[index]['uid'] in id_list):
+                id_list.remove(rv.data[index]['uid'])
 
 # Creates the search function
 class SearchScreen(GridLayout):
@@ -105,6 +109,43 @@ class SearchScreen(GridLayout):
         print(type(all_i))
 
         self.found_search(all_n, all_y, all_d, all_i)
+
+class RV(RecycleView):
+
+    data_added = StringProperty('')
+    data_removed = StringProperty('')
+
+    def __init__(self, **kwargs):
+        super(RV, self).__init__(**kwargs)
+
+
+
+class AddRemove(GridLayout):
+
+    filename = "Exported Data\\default.csv"
+    add_rem = StringProperty('')
+    gameinfo_df = pd.DataFrame(columns = ['Name', 'Year','Link','Min. Players','Max Players'])
+    csvExp = []
+
+    def AddData(self):
+        print(id_list)
+        print(self.filename)
+        print(type(self.gameinfo_df))
+        self.csvExp = getInfo(self.filename, id_list, self.gameinfo_df)
+        #return csvExp
+
+    def RemoveData():
+        pass
+
+    def Export(self):
+        #print(id_list)
+        self.csvExp.to_csv(self.filename, index=False, encoding='utf-8-sig')
+        print('Exported!')
+
+    def CSV_name(self,name):
+        self.filename = "Exported Data\\" + name.text + ".csv"
+        #print(filename)
+
 
 class GameRoot(BoxLayout):
     pass
