@@ -20,6 +20,8 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.boxlayout import BoxLayout
 
+# KivyMD Imports
+
 from bgg_api_functions import query
 
 
@@ -53,9 +55,12 @@ class RecycleViewRow(RecycleDataViewBehavior, BoxLayout):
     def apply_selection(self,rv, index, is_selected):
         self.selected = is_selected
         if is_selected:
-            print("{0} selected".format(rv.data[index]))
+            #print(rv.data[index]['selected'])
+            print("{0} selected".format(rv.data[index]['name']))
         else:
-            pass #print("selection removed for {0}".format(rv.data[index]))
+            #3rv.data[index]['selected'] = False
+            print("{0} not selected".format(rv.data[index]['name']))
+
 
 # Creates the search function
 class SearchScreen(GridLayout):
@@ -70,17 +75,8 @@ class SearchScreen(GridLayout):
     # Imports the data to the RecycleView
     def found_search(self,name, year, uid):
         games = ['{} ({})'.format(name[d], year[d]) for d in range(len(name))]
-        #self.search_results.data = [{games[x]:str(uid[x])} for x in range(len(games))]
-        self.search_results.data = [{'text':str(games[x])} for x in range(len(games))]
-        #self.searchrs.data = [{games[x]:str(uid[x])} for x in range(len(games))]
-        self.search_results.data = [{'name':str(name[x]), 'year':str(year[x]), 'uid':str(uid[x])} for x in range(len(games))]
-        #self.data = [{'game':x} for x in games]
-        #print(type(self.search_results.data))
-        #print(type(self.searchrs.data))
-        #data = self.search_results.astype('dict')
-        #self.search_results.data = {u: 0 for u in name}
-        #zprint(data)
-        print(f"self.search_results.data={self.search_results.data}")
+        self.search_results.data = [{'name':str(name[x]), 'year':str(year[x]), 'uid':str(uid[x]), 'selected':False} for x in range(len(games))]
+
 
     # function to search from API
     def on_search(self, bg, expan, src):
@@ -106,6 +102,7 @@ class SearchScreen(GridLayout):
 
 class GameRoot(BoxLayout):
     pass
+
 
 
 class BGGApp(App):
