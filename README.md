@@ -10,6 +10,7 @@ Created using Python and Kivy (while learning about Kivy along the way)
   - ~~Recycle view is giving errors: search function does return results, put doesn't output to a recycle view correctly yet.~~ *Resolved.*
   - ~~Missing labels for RecycleView. Functionality is working otherwise~~ *Resolved*
 * When selected, add ID to list of IDs to search as well as remove from list [WIP]
+* See Box Art image of board game in search results [Current WIP]
 * Selected board games to add to csv file [WIP]
 * Import .csv file and add/remove board games [WIP]
 * See rows on database like results [WIP]
