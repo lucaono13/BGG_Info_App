@@ -22,7 +22,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 # KivyMD Imports
 
-from bgg_api_functions import query
+from bgg_api_functions import query, getBoxArt
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
@@ -39,6 +39,7 @@ class RecycleViewRow(RecycleDataViewBehavior, BoxLayout):
     name = StringProperty('')
     year = StringProperty('')
     uid = StringProperty('')
+    img = StringProperty('')
 
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
@@ -73,10 +74,10 @@ class SearchScreen(GridLayout):
         print(str(self.all_r[2][game]))
 
     # Imports the data to the RecycleView
-    def found_search(self,name, year, uid):
-        games = ['{} ({})'.format(name[d], year[d]) for d in range(len(name))]
-        self.search_results.data = [{'name':str(name[x]), 'year':str(year[x]), 'uid':str(uid[x]), 'selected':False} for x in range(len(games))]
-
+    def found_search(self,name, year, uid, img):
+        #games = ['{} ({})'.format(name[d], year[d]) for d in range(len(name))]
+        self.search_results.data = [{'name':str(name[x]), 'year':str(year[x]), 'uid':str(uid[x]), 'img':str(img[x])} for x in range(len(name))]
+#, 'img':str(img[x])
 
     # function to search from API
     def on_search(self, bg, expan, src):
@@ -98,7 +99,12 @@ class SearchScreen(GridLayout):
         all_y = all_r[1]
         all_d = all_r[2]
 
-        self.found_search(all_n, all_y, all_d)
+        all_i = []
+        all_i = getBoxArt(all_d)
+
+        print(type(all_i))
+
+        self.found_search(all_n, all_y, all_d, all_i)
 
 class GameRoot(BoxLayout):
     pass

@@ -22,6 +22,7 @@ GameRoot:
     name: ""
     year: ""
     uid: ""
+    img: ""
     canvas.before:
         Color:
             rgba: (0, 1, 1, .80) if self.selected else (0, 0, 1, 0)
@@ -38,12 +39,18 @@ GameRoot:
     Label:
         text: root.name
         text_size: self.size
-        shorten: True
+        shorten: False
         halign:'left'
+        valign: 'center'
     Label:
         text: root.year
     Label:
         text: root.uid
+    AsyncImage:
+        size_hint_x: .5
+        size_hint_y: .5
+        source: root.img
+        valign: 'center'
 <SearchScreen>:
     #orientation: 'vertical'
     cols: 1
@@ -124,7 +131,7 @@ GameRoot:
                 viewclass: 'RecycleViewRow'
 
                 SelectableRecycleBoxLayout:
-                    default_size: None, dp(26)
+                    default_size: None, dp(100)
                     default_size_hint: 1, None
                     size_hint_y: None
                     height: self.minimum_height
