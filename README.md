@@ -3,24 +3,24 @@ App that will take board game info from Board Game Geek and will create a .csv f
 
 Created using Python and Kivy (while learning about Kivy along the way)
 
+![App Main Screen](https://i.imgur.com/yeptBlu.png "App Screen")
+
 
 **Features**
-* Search Board Game Geek XMLAPI2 for results that fit the search
-* Read results from search [WIP] - Working on added Recycle View instead of scroll view
-  - ~~Recycle view is giving errors: search function does return results, put doesn't output to a recycle view correctly yet.~~ *Resolved.*
-  - ~~Missing labels for RecycleView. Functionality is working otherwise~~ *Resolved*
-* When selected, add ID to list of IDs to search as well as remove from list
-* See Box Art image of board game in search results
-* Selected board games to add to csv file
+* Search Board Game Geek using their XMLAPI2 from user input search
+* Show results in a RecycleView (with images)
+* Select and add games to be added to exported csv
+  - When you make all your selections for a search, click "Get data" and the app will get the data (deselect the selections every search)
+* Export data to csv file
+  - Once all data has been collected, click export (default .csv name is default.csv)
 
-Above function will be going to an executable app for now. Going to work on a new desktop app with more functionality using PyQT. Will separate folders to show this change.
-Below will be part of new program.
-* Import .csv file and add/remove board games [WIP]
-* See rows on database like results [WIP]
-* More features...
+Decided to switch over to PyQT instead to make a program that's more to my vision of how it would look like. Will make a new repo and link it below. All functionality from this project will be reused in my other project, but will add more features like:
+* Ability to import .csv file and add/remove board games to that file
+* Second RecycleView to see which games are going to be exported to csv
+* Ability to get specific info on games (e.g. Designers, Mechanics, Playtime, etc)
+* And more to come...
 
-This is a very barebones ReadMe file. As I get more done and know what I can and can't do with Kivy, I will update readme as much as possible.
-
+Link to new project: [Coming soon]
 
 ---
 In order to run the Python script, you will need to install Kivy (run only main.py):
