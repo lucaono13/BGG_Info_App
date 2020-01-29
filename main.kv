@@ -6,10 +6,8 @@ GameRoot:
         cols: 1
         SearchScreen:
         AddRemove:
+            size_hint_y: .25
 
-
-
-#<SelectableLabel>:
 <RecycleViewRow>:
     # Draw a background to indicate selection
     name: ""
@@ -92,7 +90,7 @@ GameRoot:
                     id: bg_expan
                     size_hint_x: 1
             GridLayout:
-                cols: 3
+                cols: 4
                 size_hint_y: None
                 height: "30dp"
                 Label:
@@ -104,6 +102,9 @@ GameRoot:
                     padding:  "1000dp",0
                 Label:
                     text: "ID"
+                    size_hint_x: 1
+                Label:
+                    text: "Image"
                     size_hint_x: 1
             Widget:
                 id: separator
@@ -130,15 +131,6 @@ GameRoot:
                     orientation: 'vertical'
                     multiselect: True
                     touch_multiselect: True
-
-<RV>:
-    viewclass: 'Label'
-    RecycleBoxLayout:
-        default_size: None, dp(30)
-        default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'vertical'
 
 <AddRemove>:
     cols: 1
@@ -168,15 +160,7 @@ GameRoot:
             on_press: root.AddData()
             height: 30
             size_hint_x: .7
-        Button:
-            text: 'Remove data'
-            on_press: root.RemoveData()
-            height: 30
-            size_hint_x: .5
-    Label:
-        text: root.add_rem
-        size_hint_y: None
-        height: 30
+
     Button:
         text: 'Export!'
         size_hint_y: None

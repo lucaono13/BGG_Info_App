@@ -2,7 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 import pandas as pd
 
-
+# Query the API to get basic info of board game (name, year, uid, type)
 def query(link):
     r = requests.get(link)
     root = ET.fromstring(r.content)
@@ -39,6 +39,7 @@ def query(link):
     """
     return(name, year, id, type)
 
+# Get the box art for each result
 def getBoxArt(ids):
     joined_ids = ','.join(map(str,ids))
 
@@ -61,16 +62,11 @@ def getBoxArt(ids):
             pass
         tags=[]
 
-
-
-    #print(type(image_urls))
     print("Box Art acquired")
-    #print(joined_ids)
-    print(image_urls)
-    #print(image_urls[0])
+
     return image_urls
 
-
+# Gets basic info for export: year, name, min and max players, and link to BGG site.
 def getInfo(csv, ids, df):
 
     format_ids = ','.join(map(str,ids))

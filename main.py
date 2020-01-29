@@ -26,7 +26,7 @@ from bgg_api_functions import query, getBoxArt, getInfo
 
 id_list = []
 
-
+# Following 2 classes are used to create selectable rows for RecycleView
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
     ''' Adds selection and focus behaviour to the view. '''
 
@@ -74,9 +74,6 @@ class SearchScreen(GridLayout):
     search_results = ObjectProperty()
     searchrs = DictProperty({})
 
-    def print_out(self, game):
-        print(str(self.all_r[2][game]))
-
     # Imports the data to the RecycleView
     def found_search(self,name, year, uid, img):
         #games = ['{} ({})'.format(name[d], year[d]) for d in range(len(name))]
@@ -110,16 +107,8 @@ class SearchScreen(GridLayout):
 
         self.found_search(all_n, all_y, all_d, all_i)
 
-class RV(RecycleView):
 
-    data_added = StringProperty('')
-    data_removed = StringProperty('')
-
-    def __init__(self, **kwargs):
-        super(RV, self).__init__(**kwargs)
-
-
-
+# Class to set up functionality for adding game(s) and export
 class AddRemove(GridLayout):
 
     filename = "Exported Data\\default.csv"
@@ -128,14 +117,8 @@ class AddRemove(GridLayout):
     csvExp = []
 
     def AddData(self):
-        print(id_list)
-        print(self.filename)
-        print(type(self.gameinfo_df))
         self.csvExp = getInfo(self.filename, id_list, self.gameinfo_df)
         #return csvExp
-
-    def RemoveData():
-        pass
 
     def Export(self):
         #print(id_list)
