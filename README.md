@@ -20,7 +20,7 @@ Decided to switch over to PyQT instead to make a program that's more to my visio
 * Ability to get specific info on games (e.g. Designers, Mechanics, Playtime, etc)
 * And more to come...
 
-Link to new project: [Coming soon]
+Link to new project: https://github.com/lucaono13/Board-Game-Info-Grabber
 
 ---
 In order to run the Python script, you will need to install Kivy (run only main.py):
